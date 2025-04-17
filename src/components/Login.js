@@ -1,21 +1,26 @@
 import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 
 function Login() {
+  //Access the login function passed as context
+  const logIn=useOutletContext();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
+  //create a function that calls the login function when the form is submitted
   function handleChange(e) {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   function handleLogin(e) {
     e.preventDefault();
-  }
+    logIn();
+  };
 
   return (
     <form onSubmit={handleLogin}>

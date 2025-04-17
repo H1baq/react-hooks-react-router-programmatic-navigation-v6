@@ -1,33 +1,35 @@
-import {useState, useEffect} from "react"
-import { Outlet, useNavigate } from "react-router-dom";
+import { useState, useEffect} from "react";
+import { Outlet, Navigate, useNavigate} from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 function App() {
-  const [isLoggedIn, setIsLogggedIn] = useState=(false);
-  const navigate= useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  const logIn =() => {
-    setIsLogggedIn(true);
-  }
 
-const logout = () => {
-  setIsLogggedIn(false);
-};
-useEffect(() =>{
-  if (isLoggedIn) {
-    navigate("/");
-  }
-  else{
-    navigate("/login");
+   const login = () =>{
+    setIsLoggedIn(true);
   };
-}, {isLoggedIn})
+
+  const logout = () =>{
+    setIsLoggedIn(false);
+  };
+
+  useEffect(() =>{
+    if (isLoggedIn) {
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="app">
-      <NavBar  logout={logout}/>
-      <Outlet context={logIn}/>
+{/* Add conditional rendering so users have to be logged in to see pages on the site */}
+      {isLoggedIn ? <NavBar logout={logout}  /> : <Navigate to="/login" />}
+      <Outlet context={login}/>
     </div>
   );
-}
+};
 
 export default App;
